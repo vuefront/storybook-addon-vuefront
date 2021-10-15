@@ -19,6 +19,9 @@ function generateImports(config, source, id, defaultExport) {
         content += Array.from(imports).map(function (i) {
             return i[1][1];
         }).join('\n') + '\n';
+        content += Array.from(imports).map(function (i) {
+            return i[1][2];
+        }).join('\n') + '\n';
         content += '\n';
         if (components.length) {
             content += "installAssets(" + defaultExport + ", 'components', { " + result.join(',') + " })\n";

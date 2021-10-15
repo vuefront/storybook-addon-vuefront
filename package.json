@@ -1,6 +1,6 @@
 {
   "name": "storybook-addon-vuefront",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "license": "MIT",
   "engines": {
     "node": ">=10",
@@ -12,7 +12,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "rm -rf dist & tsc",
+    "build": "rimraf dist & tsc",
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
@@ -22,6 +22,7 @@
     "loader-utils": "^2.0.0",
     "lodash": "^4.17.21",
     "postcss-loader": "^6.2.0",
+    "rimraf": "^3.0.2",
     "vuefront": "vuefront/vuefront#vue3"
   },
   "devDependencies": {

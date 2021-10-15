@@ -28,6 +28,9 @@ export function generateImports (config: VueFrontConfig,source: string, id: stri
     content += Array.from(imports).map(i => {
       return i[1][1]
     }).join('\n') + '\n'
+    content += Array.from(imports).map(i => {
+      return i[1][2]
+    }).join('\n') + '\n'
 
     content += '\n'
 

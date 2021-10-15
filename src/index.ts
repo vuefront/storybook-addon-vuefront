@@ -41,7 +41,7 @@ export const webpack = (
 ): Configuration => {
     const { module = { rules: []} } = webpackConfig;
    const rules: RuleSetRule[] = []
-    const themeOptions = setupConfig(options.replaceRoot || undefined)
+   const themeOptions = setupConfig(options.replaceRoot || undefined)
 
     for (const key in module.rules) {
 
