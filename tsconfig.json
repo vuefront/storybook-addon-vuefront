@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "types": ["webpack-env"],
+    "lib": ["esnext"],
+    "target": "es5",
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    "strict": true,
+    "sourceMap": true,
+  },
+  "include": [
+    "src",
+    "types/*.d.ts",
+    "node_modules/@types/**/*",
+  ],
+  "exclude": [
+    "**/*.spec.ts"
+  ],
+}
