@@ -1,4 +1,4 @@
-import type { Configuration, RuleSetRule, RuleSetUseItem } from 'webpack';
+import type { Configuration, RuleSetRule, RuleSetUseItem, Module } from 'webpack';
 import postcss from 'postcss';
 import setupConfig from './setupConfig'
 import {VuefrontLoaderPlugin} from './webpack/plugin'
@@ -39,28 +39,46 @@ export const webpack = (
   webpackConfig: Configuration = {},
   options: Options = {},
 ): Configuration => {
-  if (!webpackConfig.module) {
-    webpackConfig.module = {
-      rules: []
-    }
-  }
-  if (!webpackConfig.plugins) {
-    webpackConfig.plugins = []
-  }
-  const {rules} = webpackConfig.module
+    const { module = { rules: []} } = webpackConfig;
+   const rules: RuleSetRule[] = []
     const themeOptions = setupConfig(options.replaceRoot || undefined)
-    webpackConfig.plugins.push(new VuefrontLoaderPlugin({config:themeOptions}))
 
-    for (const key in rules) {
+    for (const key in module.rules) {
 
-      if (String(rules[key].test) === String(/\.s[ca]ss$/)) {
-        webpackConfig.module.rules[key].use = [...webpackConfig.module.rules[key].use.slice(0, -1), {
-          loader: 'postcss-loader',
-          options: {
-            implementation: require('postcss')
-          }
-        }, ...webpackConfig.module.rules[key].use.slice(-1)]
+      if (String(module.rules[key].test) === String(/\.s[ca]ss$/)) {
+        if (typeof module.rules[key].use !== 'undefined') {
+          const use = module.rules[key].use as RuleSetUseItem[]
+          rules.push({
+            ...module.rules[key],
+            use: [
+              ...use.slice(0, -1), 
+              {
+                loader: 'postcss-loader',
+                options: {
+                  implementation: require('postcss')
+                }
+              }, ...use.slice(-1)
+            ]
+          })
+        }
+      } else {
+        rules.push(module.rules[key])
       }
     }
-  return webpackConfig;
+
+
+
+  return {
+    ...webpackConfig,
+    module: {
+      ...module,
+      rules: [
+        ...rules
+      ]
+    },
+    plugins: [
+      ...webpackConfig.plugins || [],
+      new VuefrontLoaderPlugin({ autoImport: true, config: themeOptions })
+    ]
+  };
 };

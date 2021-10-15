@@ -59,7 +59,8 @@ export class VuefrontLoaderPlugin {
         rules[index] = rule
         // })
         // eslint-disable-next-line no-param-reassign
-        compiler.options.module.rules = rules
+        if(compiler.options.module)
+          compiler.options.module.rules = rules
       })
     }
   }

@@ -18,10 +18,10 @@ export default function VuefrontLoader (this: any, content: string, opt: any) {
 
   if (module && !this.resourceQuery) {
     new Promise<string>((resolve, reject) => {
-      this.loadModule(module, (err, source) => {
+      this.loadModule(module, (err: any, source: any) => {
         if (err) return reject(err)
         const module = /export \* from "(.+)"/.exec(source)?.[1]
-        module && this.loadModule(module, (err, source) => {
+        module && this.loadModule(module, (err: any, source: any) => {
           if (err) reject(err)
           else resolve(source)
         })
