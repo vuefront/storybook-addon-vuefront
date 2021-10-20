@@ -190,6 +190,12 @@ exports.default = (function (replaceRoot) {
     rootReplace = replaceRoot;
     var themeOptions = {};
     themeOptions = cloneConfig(vuefront_1.default);
+    if (vuefront_1.default.organisms) {
+        vuefront_1.default.organisms.Position = {
+            css: "organisms/position/position.scss",
+            component: "organisms/position/position-test.vue",
+        };
+    }
     themeOptions = __assign(__assign({}, themeOptions), convertPath(vuefront_1.default));
     return themeOptions;
 });

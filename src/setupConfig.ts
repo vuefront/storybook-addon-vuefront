@@ -157,9 +157,14 @@ export default (replaceRoot = 'vuefront/lib'): VueFrontConfig => {
   rootReplace = replaceRoot
   let themeOptions: VueFrontConfig = {}
   themeOptions = cloneConfig(vuefrontDefaultConfig)
+  if (vuefrontDefaultConfig.organisms) {
+    vuefrontDefaultConfig.organisms.Position = {
+      css: "organisms/position/position.scss",
+      component: "organisms/position/position-test.vue",
+    }
+  }
 
   themeOptions = {...themeOptions,...convertPath(vuefrontDefaultConfig)}
 
   return themeOptions
-
 }
