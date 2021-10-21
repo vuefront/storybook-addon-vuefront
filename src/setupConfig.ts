@@ -162,6 +162,7 @@ export default (replaceRoot = 'vuefront/lib'): VueFrontConfig => {
       css: "organisms/position/position.scss",
       component: "organisms/position/position-test.vue",
     }
+    vuefrontDefaultConfig.organisms.Apollo = "organisms/apollo/apollo-test.vue"
   }
 
   themeOptions = {...themeOptions,...convertPath(vuefrontDefaultConfig)}

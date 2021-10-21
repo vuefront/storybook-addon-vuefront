@@ -195,6 +195,7 @@ exports.default = (function (replaceRoot) {
             css: "organisms/position/position.scss",
             component: "organisms/position/position-test.vue",
         };
+        vuefront_1.default.organisms.Apollo = "organisms/apollo/apollo-test.vue";
     }
     themeOptions = __assign(__assign({}, themeOptions), convertPath(vuefront_1.default));
     return themeOptions;
