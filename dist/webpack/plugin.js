@@ -1,10 +1,12 @@
 "use strict";
-var __spreadArrays = (this && this.__spreadArrays) || function () {
-    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
-    for (var r = Array(s), k = 0, i = 0; i < il; i++)
-        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-            r[k] = a[j];
-    return r;
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.VuefrontLoaderPlugin = void 0;
@@ -22,12 +24,12 @@ var VuefrontLoaderPlugin = /** @class */ (function () {
             if (!compiler.options.module) {
                 return;
             }
-            var vueRules = getVueRules_1.getVueRules(compiler);
+            var vueRules = (0, getVueRules_1.getVueRules)(compiler);
             if (!vueRules.length) {
                 throw new Error("[VuefrontLoaderPlugin Error] No matching rule for vue-loader found.\n" +
                     "Make sure there is at least one root-level rule that uses vue-loader and VuefrontLoaderPlugin is applied after VueLoaderPlugin.");
             }
-            var rules_1 = __spreadArrays(compiler.options.module.rules);
+            var rules_1 = __spreadArray([], compiler.options.module.rules, true);
             vueRules.forEach(function (_a) {
                 var rule = _a.rule, index = _a.index;
                 rule.oneOf = [
@@ -37,13 +39,13 @@ var VuefrontLoaderPlugin = /** @class */ (function () {
                         use: rule.use
                     },
                     {
-                        use: __spreadArrays([
+                        use: __spreadArray([
                             {
                                 loader: require.resolve('./scriptLoader'), options: {
                                     config: _this.options.config,
                                 },
                             }
-                        ], rule.use)
+                        ], rule.use, true)
                     },
                 ];
                 delete rule.use;

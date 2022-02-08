@@ -9,14 +9,14 @@ var tag_1 = __importDefault(require("./matcher/tag"));
 /** key: module ID, value: resolved components */
 var componentsMap = new Map();
 function getImports(config, source, id) {
-    var components = parseTemplate_1.parseTemplate(source).components;
+    var components = (0, parseTemplate_1.parseTemplate)(source).components;
     var resolvedComponents = componentsMap.get(id) || (componentsMap.set(id, new Set()), componentsMap.get(id));
     var imports = new Map();
     var componentsStart = resolvedComponents.size;
     if (components.size) {
         // addImport(imports, 'installAssets', ['installAssets', 'vuefront-storybook/runtime'])
         components.forEach(function (name) {
-            var result = tag_1.default(config, name);
+            var result = (0, tag_1.default)(config, name);
             if (result) {
                 addImport(imports, name, result);
                 resolvedComponents.add(name);

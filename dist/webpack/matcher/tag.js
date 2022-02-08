@@ -4,17 +4,17 @@ var _ = require('lodash');
 var renderImport = function (component, tag) {
     var result = '';
     if (component.type === 'full') {
-        result = "import " + tag + " from '" + component.path + "';";
+        result = "import ".concat(tag, " from '").concat(component.path, "';");
     }
     else {
-        result = "import {" + component.component + "} from '" + component.path + "';";
+        result = "import {".concat(component.component, "} from '").concat(component.path, "';");
     }
     return result;
 };
 var renderImportCss = function (component, tag) {
     var result = '';
     if (component.css) {
-        result += "import \"" + component.css + "\"";
+        result += "import \"".concat(component.css, "\"");
     }
     return result;
 };

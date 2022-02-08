@@ -9,6 +9,6 @@ function parseTemplate(source) {
 }
 exports.parseTemplate = parseTemplate;
 function createSet(matches) {
-    return new Set(Array.from(matches, function (i) { return vue_1.capitalize(vue_1.camelize(i[1])); }));
+    return new Set(Array.from(matches, function (i) { return (0, vue_1.capitalize)((0, vue_1.camelize)(i[1])); }));
 }
 //# sourceMappingURL=parseTemplate.js.map

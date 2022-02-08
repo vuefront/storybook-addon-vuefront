@@ -10,12 +10,14 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-var __spreadArrays = (this && this.__spreadArrays) || function () {
-    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
-    for (var r = Array(s), k = 0, i = 0; i < il; i++)
-        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-            r[k] = a[j];
-    return r;
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
 };
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -31,32 +33,35 @@ function wrapLoader(loader, options) {
     return [{ loader: loader, options: options }];
 }
 var webpack = function (webpackConfig, options) {
+    var _a;
     if (webpackConfig === void 0) { webpackConfig = {}; }
     if (options === void 0) { options = {}; }
-    var _a = webpackConfig.module, module = _a === void 0 ? { rules: [] } : _a;
+    var _b = webpackConfig.module, module = _b === void 0 ? { rules: [] } : _b;
     var rules = [];
-    var themeOptions = setupConfig_1.default(options.replaceRoot || undefined);
-    for (var key in module.rules) {
-        if (String(module.rules[key].test) === String(/\.s[ca]ss$/)) {
-            if (typeof module.rules[key].use !== 'undefined') {
-                var use = module.rules[key].use;
-                rules.push(__assign(__assign({}, module.rules[key]), { use: __spreadArrays(use.slice(0, -1), [
-                        {
-                            loader: 'postcss-loader',
-                            options: {
-                                implementation: require('postcss')
+    var themeOptions = (0, setupConfig_1.default)(options.replaceRoot || undefined);
+    (_a = module.rules) === null || _a === void 0 ? void 0 : _a.forEach(function (val, key) {
+        if (val !== '...') {
+            if (String(val.test) === String(/\.s[ca]ss$/)) {
+                if (typeof val.use !== 'undefined') {
+                    var use = val.use;
+                    rules.push(__assign(__assign({}, val), { use: __spreadArray(__spreadArray(__spreadArray([], use.slice(0, -1), true), [
+                            {
+                                loader: 'postcss-loader',
+                                options: {
+                                    implementation: require('postcss')
+                                }
                             }
-                        }
-                    ], use.slice(-1)) }));
+                        ], false), use.slice(-1), true) }));
+                }
+            }
+            else {
+                rules.push(val);
             }
         }
-        else {
-            rules.push(module.rules[key]);
-        }
-    }
-    return __assign(__assign({}, webpackConfig), { module: __assign(__assign({}, module), { rules: __spreadArrays(rules) }), plugins: __spreadArrays(webpackConfig.plugins || [], [
+    });
+    return __assign(__assign({}, webpackConfig), { module: __assign(__assign({}, module), { rules: __spreadArray([], rules, true) }), plugins: __spreadArray(__spreadArray([], webpackConfig.plugins || [], true), [
             new plugin_1.VuefrontLoaderPlugin({ autoImport: true, config: themeOptions })
-        ]) });
+        ], false) });
 };
 exports.webpack = webpack;
 //# sourceMappingURL=index.js.map

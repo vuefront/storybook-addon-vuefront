@@ -1,7 +1,8 @@
-import type { Configuration, RuleSetRule, RuleSetUseItem, Module } from 'webpack';
+import { Configuration, RuleSetUseItem, Module } from 'webpack';
 import postcss from 'postcss';
 import setupConfig from './setupConfig'
 import {VuefrontLoaderPlugin} from './webpack/plugin'
+import type {RuleSetRule} from 'webpack'
 
 type StyleLoaderOptions = Record<string, unknown>;
 type CssLoaderOptions = Record<string, unknown> & {
@@ -43,30 +44,29 @@ export const webpack = (
    const rules: RuleSetRule[] = []
    const themeOptions = setupConfig(options.replaceRoot || undefined)
 
-    for (const key in module.rules) {
-
-      if (String(module.rules[key].test) === String(/\.s[ca]ss$/)) {
-        if (typeof module.rules[key].use !== 'undefined') {
-          const use = module.rules[key].use as RuleSetUseItem[]
-          rules.push({
-            ...module.rules[key],
-            use: [
-              ...use.slice(0, -1), 
-              {
-                loader: 'postcss-loader',
-                options: {
-                  implementation: require('postcss')
-                }
-              }, ...use.slice(-1)
-            ]
-          })
+   module.rules?.forEach((val, key) => {
+     if (val !== '...') {
+        if (String(val.test) === String(/\.s[ca]ss$/)) {
+          if (typeof val.use !== 'undefined') {
+            const use = val.use as RuleSetUseItem[]
+            rules.push({
+              ...val,
+              use: [
+                ...use.slice(0, -1), 
+                {
+                  loader: 'postcss-loader',
+                  options: {
+                    implementation: require('postcss')
+                  }
+                }, ...use.slice(-1)
+              ]
+            })
+          }
+        } else {
+          rules.push(val)
         }
-      } else {
-        rules.push(module.rules[key])
       }
-    }
-
-
+   })
 
   return {
     ...webpackConfig,

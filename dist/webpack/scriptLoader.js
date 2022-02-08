@@ -18,7 +18,7 @@ function VuefrontLoader(content, opt) {
     var _a, _b;
     this.async();
     this.cacheable();
-    var options = __assign({ match: [], attrsMatch: [], config: {} }, loader_utils_1.getOptions(this));
+    var options = __assign({ match: [], attrsMatch: [], config: {} }, (0, loader_utils_1.getOptions)(this));
     var render = (_a = /^import { render } from "(.+)"$/m.exec(content)) === null || _a === void 0 ? void 0 : _a[1];
     var script = (_b = /^import script from "(.+)"$/m.exec(content)) === null || _b === void 0 ? void 0 : _b[1];
     var module = render || script;
@@ -37,7 +37,7 @@ function VuefrontLoader(content, opt) {
                 });
             });
         }).then(function (source) {
-            content += generateImports_1.generateImports(options.config, source, _this.resourcePath, 'script').code;
+            content += (0, generateImports_1.generateImports)(options.config, source, _this.resourcePath, 'script').code;
             _this.callback(null, content);
         });
     }
